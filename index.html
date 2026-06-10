@@ -614,6 +614,7 @@
     <li><a href="#roster">Equipo</a></li>
     <li><a href="#torneos">Torneos</a></li>
     <li><a href="#contacto">Contacto</a></li>
+    <li><a href="#solicitud">Únete</a></li>
   </ul>
 </nav>
 
@@ -712,14 +713,14 @@
     <div class="section-divider"></div>
   </div>
   <div class="social-grid reveal">
-    <a href="#" class="social-card">
+    <a href="https://discord.gg/wFbVdfUYr" target="_blank" class="social-card">
       <span class="social-icon">💬</span> Discord
+    </a>
+    <a href="https://www.youtube.com/@HomuraClanofRocketLeague" target="_blank" class="social-card">
+      <span class="social-icon">▶️</span> YouTube
     </a>
     <a href="#" class="social-card">
       <span class="social-icon">🐦</span> Twitter / X
-    </a>
-    <a href="#" class="social-card">
-      <span class="social-icon">▶️</span> YouTube
     </a>
     <a href="#" class="social-card">
       <span class="social-icon">📸</span> Instagram
@@ -728,9 +729,43 @@
       <span class="social-icon">🎮</span> TikTok
     </a>
   </div>
-  <div class="contact-cta reveal">
-    <p>¿Quieres formar parte de Homura Clan?<br/>Somos un equipo de freestyle de Rocket League con identidad propia. Si tienes nivel y actitud, haznos saber.</p>
-    <a href="#" class="btn btn-primary">Solicitar Ingreso</a>
+</section>
+
+<div class="divider-full"></div>
+
+<!-- SOLICITUD -->
+<section id="solicitud">
+  <div class="section-header reveal">
+    <p class="section-label">Forma parte</p>
+    <h2 class="section-title">Únete al Clan</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="contact-cta reveal" style="max-width:600px;">
+    <p>¿Tienes nivel y actitud? Rellena el formulario y nos pondremos en contacto contigo por Discord.</p>
+    <div style="display:flex;flex-direction:column;gap:16px;margin-top:8px;">
+      <input id="f-name" type="text" placeholder="Tu gamertag / nombre en RL" style="background:rgba(255,79,163,0.06);border:1px solid rgba(255,79,163,0.3);color:#fff;padding:14px 18px;font-family:'Rajdhani',sans-serif;font-size:15px;letter-spacing:1px;outline:none;width:100%;transition:border 0.3s;" onfocus="this.style.borderColor='#ff4fa3'" onblur="this.style.borderColor='rgba(255,79,163,0.3)'" />
+      <input id="f-discord" type="text" placeholder="Tu usuario de Discord" style="background:rgba(255,79,163,0.06);border:1px solid rgba(255,79,163,0.3);color:#fff;padding:14px 18px;font-family:'Rajdhani',sans-serif;font-size:15px;letter-spacing:1px;outline:none;width:100%;transition:border 0.3s;" onfocus="this.style.borderColor='#ff4fa3'" onblur="this.style.borderColor='rgba(255,79,163,0.3)'" />
+      <select id="f-estilo" style="background:#0a0008;border:1px solid rgba(255,79,163,0.3);color:rgba(255,255,255,0.7);padding:14px 18px;font-family:'Rajdhani',sans-serif;font-size:15px;letter-spacing:1px;outline:none;width:100%;transition:border 0.3s;" onfocus="this.style.borderColor='#ff4fa3'" onblur="this.style.borderColor='rgba(255,79,163,0.3)'">
+        <option value="" disabled selected>Estilo de freestyle</option>
+        <option value="aerial">Aerial Freestyler</option>
+        <option value="ground">Ground Freestyler</option>
+        <option value="ambos">Ambos</option>
+      </select>
+      <select id="f-rank" style="background:#0a0008;border:1px solid rgba(255,79,163,0.3);color:rgba(255,255,255,0.7);padding:14px 18px;font-family:'Rajdhani',sans-serif;font-size:15px;letter-spacing:1px;outline:none;width:100%;transition:border 0.3s;" onfocus="this.style.borderColor='#ff4fa3'" onblur="this.style.borderColor='rgba(255,79,163,0.3)'">
+        <option value="" disabled selected>Tu rank en RL</option>
+        <option>Bronze</option>
+        <option>Silver</option>
+        <option>Gold</option>
+        <option>Platinum</option>
+        <option>Diamond</option>
+        <option>Champion</option>
+        <option>Grand Champion</option>
+        <option>Supersonic Legend</option>
+      </select>
+      <textarea id="f-msg" placeholder="¿Por qué quieres unirte a Homura Clan?" rows="3" style="background:rgba(255,79,163,0.06);border:1px solid rgba(255,79,163,0.3);color:#fff;padding:14px 18px;font-family:'Rajdhani',sans-serif;font-size:15px;letter-spacing:1px;outline:none;width:100%;resize:vertical;transition:border 0.3s;" onfocus="this.style.borderColor='#ff4fa3'" onblur="this.style.borderColor='rgba(255,79,163,0.3)'"></textarea>
+      <button onclick="enviarSolicitud()" class="btn btn-primary" style="width:100%;font-size:14px;">Enviar Solicitud</button>
+      <p id="f-msg-ok" style="display:none;color:#ff4fa3;text-align:center;letter-spacing:2px;font-size:13px;">✅ ¡Solicitud enviada! Te contactaremos por Discord.</p>
+    </div>
   </div>
 </section>
 
@@ -752,6 +787,23 @@
     });
   }, { threshold: 0.1 });
   reveals.forEach(r => observer.observe(r));
+
+  function enviarSolicitud() {
+    const name = document.getElementById('f-name').value.trim();
+    const discord = document.getElementById('f-discord').value.trim();
+    const estilo = document.getElementById('f-estilo').value;
+    const rank = document.getElementById('f-rank').value;
+    if (!name || !discord || !estilo || !rank) {
+      alert('Por favor rellena todos los campos.');
+      return;
+    }
+    document.getElementById('f-msg-ok').style.display = 'block';
+    document.getElementById('f-name').value = '';
+    document.getElementById('f-discord').value = '';
+    document.getElementById('f-estilo').selectedIndex = 0;
+    document.getElementById('f-rank').selectedIndex = 0;
+    document.getElementById('f-msg').value = '';
+  }
 </script>
 
 </body>
